@@ -1,0 +1,18 @@
+{
+    "grade_config": {
+        "levels": [
+            {"name": "Excellent", "min": 90, "max": 100, "color": "green"},
+            {"name": "Good", "min": 70, "max": 89, "color": "blue"},
+            {"name": "Pass", "min": 60, "max": 69, "color": "yellow"},
+            {"name": "Unpass", "min": 0, "max": 59, "color": "green"}
+        ]
+    },
+    "storage": {
+        "type": "file",
+        "file_path": "data/student.json"
+    },
+    "ui": {
+        "language": "zh-CN",
+        "theme": "default"
+    }
+}

@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"student-score/model"
 	"student-score/service"
 )
 
@@ -13,8 +14,8 @@ type StudentController struct {
 	service service.StudentService
 }
 
-func NewStudentController(service services.StudentService) *StudentContoller {
-	return &StudentContoller{
+func NewStudentController(service service.StudentService) *StudentController {
+	return &StudentController{
 		service: service,
 	}
 }
@@ -48,7 +49,7 @@ func (c *StudentController) Run() error {
 	return nil
 }
 
-func (c *StudentContoller) showMenu() {
+func (c *StudentController) showMenu() {
     fmt.Println("\n=== 学生管理系统 ===")
     fmt.Println("1. 添加学生")
     fmt.Println("2. 查看所有学生") 
@@ -85,7 +86,7 @@ func (c *StudentController) addStudent(scanner *bufio.Scanner) {
 }
 
 func (c *StudentController) listStudents() {
-	students, err := c.service.ListStudents()
+	students, err := c.service.ListStudent()
 	if err != nil {
 		fmt.Printf("获取学生列表失败：%v\n", err)
 		return
@@ -100,7 +101,7 @@ func (c *StudentController) listStudents() {
 	fmt.Println("ID\t姓名\t成绩\t等级")
 	for _, student := range students {
 		level := c.service.GetGradeLevel(student.Score)
-		fmt.Printf("%d\t%s\t%.1f\t%s\n", student.ID, sutdent.Name, student.Score, level)
+		fmt.Printf("%d\t%s\t%.1f\t%s\n", student.ID, student.Name, student.Score, level)
 	}
 }
 
@@ -127,5 +128,5 @@ func (c *StudentController) findStudent(scanner *bufio.Scanner) {
 	}
 
 	level := c.service.GetGradeLevel(student.Score)
-	fmt.Printf("找到学生: ID=%d, 姓名=%s, 成绩=%.1f, 等级=%s\n", studenet.ID, student.Name, student.Score, level)
+	fmt.Printf("找到学生: ID=%d, 姓名=%s, 成绩=%.1f, 等级=%s\n", student.ID, student.Name, student.Score, level)
 }

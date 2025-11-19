@@ -2,9 +2,9 @@ name: CI - Develop Branch
 
 on: 
   push:
-    branches: [ develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ develop ]
+    branches: [ main ]
 
 jobs:
   test:
@@ -20,16 +20,16 @@ jobs:
         go-version: '1.21'
     
     - name: Run tests
-      run: go test -v ./..
+      run: go test -v ./...
     
     - name: Run golangci-lint
-      uses: goloangci/golangci-lint-action@v3
+      uses: golangci/golangci-lint-action@v3
       with:
         version: latest
   
   security-scan:
     name: Security Scan
-    runs-on: ubuntu-test
+    runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
@@ -42,7 +42,7 @@ jobs:
         format: 'sarif'
         output: 'trivy-results.sarif'
 
-    - name: Updaload Trivy scan results
+    - name: Upload Trivy scan results
       uses: github/codeql-action/upload-sarif@v2
       if: always()
       with:

@@ -4,7 +4,7 @@ type Student struct {
 	ID    int     `json:"id"`
 	Name  string  `json:"name"`
 	Score float64 `json:"score"`
-	Class string  `json:""class`
+	Class string  `json:"class"`
 }
 
 type GradeConfig struct {

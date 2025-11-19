@@ -5,7 +5,7 @@ import (
 	"os"
 )
 
-func LoadConfig(filename string) (*Appconfig, error) {
+func LoadConfig(filename string) (*AppConfig, error) {
 	data, err := os.ReadFile(filename)
 	if err != nil {
 		return nil, err

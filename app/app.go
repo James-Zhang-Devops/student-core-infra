@@ -1,43 +1,39 @@
-package append
+package app
 
 import (
 	"student-score/config"
-	"student-score/repo"
+	"student-score/repository"
 	"student-score/service/impl"
 	"student-score/controller"
 )
 
 type Application struct {
 	Config     *config.AppConfig
-	Repo       repo.StudentRepo
+	Repo       repository.StudentRepo
 	Service    *impl.StudentServiceImpl
 	Controller *controller.StudentController
 }
 
-func NewApplication(config string) (*Application, error) {
+func NewApplication(configPath string) (*Application, error) {
 	cfg, err := config.LoadConfig(configPath)
 	if err != nil {
 		return nil, err
 	}
 
-	var repo repo.StudentRepo
-	switch cfg.Storage.Type {
-	case "file":
-		repo = repo.NewFileStudentRepo(cfg.Storage.FilePath)
-	}
+	repo := repository.NewFileStudentRepo(cfg.Storage.FilePath)
 
-	service := impl.NewStudentService(repo, cfg)
+	studentService := impl.NewStudentService(repo, cfg)
 
-	controller := controller.NewStudentController(service)
+	controller := controller.NewStudentController(studentService)
 
 	return &Application{
 		Config:     cfg,
 		Repo:       repo,
-		Service:    service,
+		Service:    studentService,
 		Controller: controller,
 	}, nil
 }
 
-func (app *Application) start() error {
+func (app *Application) Start() error {
 	return app.Controller.Run()
 }

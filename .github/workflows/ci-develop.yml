@@ -1,0 +1,71 @@
+name: CI - Develop Branch
+
+on: 
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.21'
+    
+    - name: Run tests
+      run: go test -v ./...
+    
+    - name: Run golangci-lint
+      uses: golangci/golangci-lint-action@v3
+      with:
+        version: latest
+  
+  security-scan:
+    name: Security Scan
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Run Trivy security scan
+      uses: aquasecurity/trivy-action@master
+      with:
+        scan-type: 'fs'
+        scan-ref: '.'
+        format: 'sarif'
+        output: 'trivy-results.sarif'
+
+    - name: Upload Trivy scan results
+      uses: github/codeql-action/upload-sarif@v2
+      if: always()
+      with:
+        sarif_file: 'trivy-results.sarif'
+  
+  build:
+    name: Build and Scan Docker Image
+    needs: [test, security-scan]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Build Docker image
+      run: docker build -t student-app:develop-${{ github.sha }} .
+
+    - name: Scan Docker image
+      run: |
+        trivy image --format table --exit-code 0 student-app:develop-${{ github.sha }}
+
+    - name: Log build info
+      run: |
+        echo "Develop branch build completed successfully"
+        echo "Image: student-app:develop-${{ github.sha }}"
+        echo "Triggered by: ${{ github.event_name }}"
+        echo "Commit by: ${{ github.actor }}"

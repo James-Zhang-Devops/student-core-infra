@@ -204,7 +204,7 @@ func main () {
 		log.Fatalf("启动失败: %v", err)
 	}
 
-	if err := application.start(); err != nil {
+	if err := application.Start(); err != nil {
 		log.Fatalf("运行失败: %v", err)
 	}
 }

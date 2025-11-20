@@ -39,7 +39,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     permissions:
-      package: write
+      packags: write
       contents: read
 
     steps:

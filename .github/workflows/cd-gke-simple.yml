@@ -22,7 +22,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Set up Go
-      run: actions/setup-kubectl@v3
+      uses: actions/setup-kubectl@v3
       with:
         go-version: '1.21'
     
@@ -39,7 +39,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     permissions:
-      packags: write
+      packages: write
       contents: read
 
     steps:

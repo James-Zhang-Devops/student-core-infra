@@ -41,7 +41,7 @@ jobs:
     - name: Run Trivy security scan
       uses: aquasecurity/trivy-action@master
       with:
-        scan-type: 'fs'
+        scan-type: 'fs' 
         scan-ref: '.'
         format: 'sarif'
         output: 'trivy-results.sarif'

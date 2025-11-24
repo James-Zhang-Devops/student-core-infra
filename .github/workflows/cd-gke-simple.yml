@@ -62,8 +62,8 @@ jobs:
           context: .
           push: true
           tags: |
-            $ {{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-            $ {{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -99,5 +99,5 @@ jobs:
     
     - name: Verify deployment
       run: |
-        kubectl get pods -n $ {{ env.NAMESPACE }} -o wide
+        kubectl get pods -n ${{ env.NAMESPACE }} -o wide
         kubectl get services -n ${{ env.NAMESPACE }}

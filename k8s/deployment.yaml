@@ -31,9 +31,9 @@ spec:
             cpu: "100m"
 ---
 apiVersion: v1
-kind: Services
+kind: Service
 metadata:
-  name: student-app-services
+  name: student-app-service
 spec:
   selector:
     app: student-app

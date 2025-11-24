@@ -93,10 +93,14 @@ jobs:
     
     - name: Deploy application
       run: |
-        sed -i "s|ghcr.io/James-Zhang-Devops/student-core-infra:latest|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}|g" k8s/deployment.yaml
-        kubectl apply -f k8s/ -n ${{ env.NAMESPACE }}
+        cp k8s/deployment.yaml k8s/deployment-temp.yaml
+        
+        sed -i "s|ghcr.io/james-zhang-devops/student-core-infra:latest|${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}|g" k8s/deployment-temp.yaml
+
+        kubectl apply -f k8s/deployment-temp.yaml -n ${{ env.NAMESPACE }}
+
         kubectl rollout status deployment/student-app -n ${{ env.NAMESPACE }} --timeout=300s
-    
+
     - name: Verify deployment
       run: |
         kubectl get pods -n ${{ env.NAMESPACE }} -o wide

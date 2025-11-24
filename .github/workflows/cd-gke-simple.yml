@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ lower(github.repository) }}
+  IMAGE_NAME: student-core-infra
   CLUSTER_NAME: student-app-cluster
   ZONE: us-centrall-a
   PROJECT_ID: eloquent-surge-478708-s3

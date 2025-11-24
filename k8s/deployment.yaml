@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: student-app
-  label:
+  labels:
     app: student-app
 spec:
   replicas: 2
@@ -29,13 +29,13 @@ spec:
           limits:
             memory: "128Mi"
             cpu: "100m"
-        livenessProde:
+        livenessProbe:
           httpGet:
             path: /health
             port: 8080
           inittialDelaySeconds: 30
           periodSeconds: 10
-        readinessProde:
+        readinessProbe:
           httpGet:
             path: /health
             port: 8080

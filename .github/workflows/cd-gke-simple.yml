@@ -9,7 +9,7 @@ env:
   REGISTRY: ghcr.io
   IMAGE_NAME: james-zhang-devops/student-core-infra
   CLUSTER_NAME: student-app-cluster
-  ZONE: us-centrall-a
+  ZONE: us-central1-a
   PROJECT_ID: eloquent-surge-478708-s3
   NAMESPACE: student-app
 

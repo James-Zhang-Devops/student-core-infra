@@ -3,8 +3,7 @@ name: CI - Develop Branch
 on: 
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   test:
